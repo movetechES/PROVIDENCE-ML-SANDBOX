@@ -1,0 +1,36 @@
+# Pesos y checkpoints — nunca se commitean (CLAUDE.md, regla a)
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.safetensors
+*.engine
+weights/
+checkpoints/
+runs/
+
+# Registro de experimentos MLflow (local)
+mlruns/
+mlflow.db
+
+# Datos — viven en C:\DEV-HEROS-DEFENSE\PROVIDENCE-DATA\ (DVC), no aquí
+datos/
+data/
+datasets/
+*.mp4
+*.avi
+*.mkv
+
+# Entorno virtual
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Credenciales y entorno local — jamás en el repo
+.env
+*.local

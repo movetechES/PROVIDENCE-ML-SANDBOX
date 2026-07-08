@@ -1,0 +1,17 @@
+# PROVIDENCE-ML-SANDBOX — series aprobadas por Alejandro (REGISTRO.md, 2026-07-08).
+# Python 3.12 (intérprete del venv; no es paquete pip).
+# Instala Alejandro en el venv propio del sandbox. Restricción dura: la RTX 5070 es
+# Blackwell (sm_120) — torch/torchvision deben ser build cu128, de ahí el índice extra.
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+torch>=2.7                # BSD-3-Clause — build cu128 (índice extra de arriba)
+torchvision>=0.22         # BSD-3-Clause — pareja de torch 2.7, build cu128
+ultralytics>=8.3,<8.4     # AGPL-3.0 — candidato YOLO; SOLO sandbox, jamás cruza al producto
+transformers>=4.52,<5     # Apache-2.0 — RT-DETRv2 y D-FINE; exacta a fijar al resolver el venv
+pycocotools>=2,<3         # BSD — mAP formato COCO
+onnx                      # Apache-2.0 — exportación del ganador ("actuales", sin techo)
+onnxruntime-gpu           # MIT — medida de latencia del benchmark ("actuales", sin techo)
+opencv-python>=4,<5       # Apache-2.0 — decodificación de vídeo y visualización de errores
+dvc>=3,<4                 # Apache-2.0 — versionado de PROVIDENCE-DATA
+mlflow>=2,<4              # Apache-2.0 — registro de experimentos LOCAL
+numpy>=2,<3               # BSD — directa por SBOM
