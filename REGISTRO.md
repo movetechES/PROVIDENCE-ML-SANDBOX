@@ -39,3 +39,39 @@ Anotaciones normativas de la aprobación:
 
 Aviso registrado para B5 (aprobación formal cuando llegue): CVAT (MIT, servicio
 Docker local) como herramienta de anotación.
+
+### Resolución (2026-07-08)
+
+Primera instalación verificada por Alejandro en el venv propio del sandbox.
+Versiones resueltas tomadas de `requirements-lock.txt` (salida de `pip freeze`).
+
+| Dependencia | Serie aprobada | Versión resuelta | ¿Casa con la serie? |
+|---|---|---|---|
+| torch | >= 2.7, cu128 | 2.11.0+cu128 | Sí |
+| torchvision | >= 2.7 (pareja de torch), cu128 | 0.26.0+cu128 | Sí (pareja de torch 2.11) |
+| ultralytics | 8.3.x | 8.3.253 | Sí |
+| transformers | 4.x reciente (exacta al resolver) | 4.57.6 | Sí — esta es la exacta |
+| pycocotools | 2.x | 2.0.11 | Sí |
+| onnx | actuales | 1.22.0 | Sí |
+| onnxruntime-gpu | actuales | 1.27.0 | Sí |
+| opencv-python | 4.x | 4.13.0.92 | Sí |
+| dvc | 3.x | 3.67.1 | Sí |
+| mlflow | 2.x/3.x | 3.14.0 | Sí |
+| numpy | 2.x | 2.4.4 | Sí |
+
+Ninguna resolución fuera de su serie aprobada.
+
+**Gate de instalación (verificado por Alejandro, 2026-07-08):**
+
+```
+python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+2.11.0+cu128 True NVIDIA GeForce RTX 5070 Laptop GPU
+```
+
+Build cu128 confirmada, CUDA disponible y RTX 5070 detectada: la restricción dura
+de Blackwell (sm_120) que fijaba el suelo de versiones queda satisfecha.
+
+**Reproducibilidad:** `requirements-lock.txt` queda en el repo como eslabón local de
+reproducibilidad del venv — mismo criterio que los locks de Fase 0 (DECISIONES.md §6
+del producto). `requirements.txt` expresa las series aprobadas; el lock, la
+resolución concreta verificada en esta fecha.
