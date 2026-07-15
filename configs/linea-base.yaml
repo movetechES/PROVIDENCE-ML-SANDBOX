@@ -1,0 +1,55 @@
+# Protocolo de la línea base zero-shot (B3, fase 2) — aprobado 2026-07-16.
+# El criterio de aceptación NO vive aquí (DECISIONES.md §15 del producto).
+
+version: linea-base-v1
+semilla: 20260716          # el muestreo es determinista por construcción; se registra igualmente
+
+imgsz: 640
+conf_min: 0.001            # umbral de confianza para el mAP (convención COCO)
+jpeg_calidad: 95           # decisión 4 de la aprobación
+
+muestreo:
+  virat:
+    zancada_min_frames: 90   # ~3 s a 29.97 fps
+    tope_por_video: 20
+  meva:
+    zancada_min_frames: 150  # 5 s a 30 fps
+    tope_por_clip: 25
+
+latencia:
+  warmup: 50
+  medidas: 300
+  frames_por_dataset: 150    # 150 VIRAT + 150 MEVA = 300 frames reales
+  umbral_fps: 15             # DECISIONES.md §15
+
+modelos:
+  - id: yolo11s
+    candidato: yolo-ultralytics
+    variante: s
+    licencia: AGPL-3.0
+    pesos: pesos/linea-base/ultralytics/yolo11s.pt      # relativo a PROVIDENCE-DATA
+  - id: yolo11m
+    candidato: yolo-ultralytics
+    variante: m
+    licencia: AGPL-3.0
+    pesos: pesos/linea-base/ultralytics/yolo11m.pt
+  - id: rtdetrv2-s
+    candidato: rt-detrv2
+    variante: s (r18vd)
+    licencia: Apache-2.0
+    hf_id: PekingU/rtdetr_v2_r18vd
+  - id: rtdetrv2-m
+    candidato: rt-detrv2
+    variante: m (r34vd)
+    licencia: Apache-2.0
+    hf_id: PekingU/rtdetr_v2_r34vd
+  - id: dfine-s
+    candidato: d-fine
+    variante: s
+    licencia: Apache-2.0
+    hf_id: ustc-community/dfine-small-coco
+  - id: dfine-m
+    candidato: d-fine
+    variante: m
+    licencia: Apache-2.0
+    hf_id: ustc-community/dfine-medium-coco

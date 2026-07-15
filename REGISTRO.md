@@ -75,3 +75,31 @@ de Blackwell (sm_120) que fijaba el suelo de versiones queda satisfecha.
 reproducibilidad del venv — mismo criterio que los locks de Fase 0 (DECISIONES.md §6
 del producto). `requirements.txt` expresa las series aprobadas; el lock, la
 resolución concreta verificada en esta fecha.
+
+## Ampliación de dependencias (2026-07-16)
+
+Aprobada por Alejandro junto con la propuesta de B3 (harness + línea base zero-shot):
+
+| Dependencia | Serie aprobada | Versión resuelta | Licencia | Para qué |
+|---|---|---|---|---|
+| PyYAML | 6.x | 6.0.3 (ya presente en `requirements-lock.txt`) | MIT | Parser de KPF (anotaciones MEVA). **Promovida de transitiva a directa como parser KPF**: ya estaba en el venv como transitiva de mlflow/ultralytics/dvc — no hay nada que instalar; el cambio es normativo (línea en `requirements.txt` + esta fila). Se usa `yaml.CSafeLoader` (los `geom.yml` grandes rondan las 100k líneas). |
+
+## Sustitución de build: onnxruntime-gpu cu13 → cu12 (2026-07-16)
+
+La resolución inicial (onnxruntime-gpu 1.27.0 de PyPI) resultó ser **build CUDA 13**
+(exige `cublasLt64_13.dll`) e incompatible con el stack del venv (torch 2.11+cu128
+aporta solo DLLs CUDA 12.8): CUDAExecutionProvider no podía activarse y la latencia
+del benchmark no se mide en CPU (anotación normativa 1). Aprobado y ejecutado por
+Alejandro: reinstalación de **onnxruntime-gpu 1.27.1, build CUDA 12**, desde el
+índice oficial de ONNX Runtime para CUDA 12
+(`aiinfra.pkgs.visualstudio.com/…/onnxruntime-cuda-12`). Misma dependencia, misma
+licencia (MIT), misma serie aprobada («actuales»); solo cambia la build y la fuente.
+Verificado: `CUDAExecutionProvider` disponible. Lock regenerado por Alejandro.
+
+**Aviso registrado — autoinstall de ultralytics:** durante la exportación ONNX de
+B3, ultralytics intentó auto-instalar `onnxslim` (dependencia NO aprobada). El
+intento falló (pip fuera de PATH) y el venv quedó intacto; el export es válido sin
+ese simplificador. Neutralización fijada en el harness: `YOLO_AUTOINSTALL=false`
+como variable de entorno en el orquestador. Cualquier futura necesidad de
+`onnxslim` se propondrá por el cauce normativo (versión y licencia, antes de tocar
+manifiestos).

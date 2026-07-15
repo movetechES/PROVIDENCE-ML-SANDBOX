@@ -9,6 +9,7 @@ torchvision>=0.22         # BSD-3-Clause — pareja de torch 2.7, build cu128
 ultralytics>=8.3,<8.4     # AGPL-3.0 — candidato YOLO; SOLO sandbox, jamás cruza al producto
 transformers>=4.52,<5     # Apache-2.0 — RT-DETRv2 y D-FINE; exacta a fijar al resolver el venv
 pycocotools>=2,<3         # BSD — mAP formato COCO
+pyyaml>=6,<7              # MIT — parser KPF (MEVA); promovida de transitiva a directa (REGISTRO.md 2026-07-16)
 onnx                      # Apache-2.0 — exportación del ganador ("actuales", sin techo)
 onnxruntime-gpu           # MIT — medida de latencia del benchmark ("actuales", sin techo)
 opencv-python>=4,<5       # Apache-2.0 — decodificación de vídeo y visualización de errores
